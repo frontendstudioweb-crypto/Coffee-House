@@ -1,0 +1,323 @@
+/* ==========================================================================
+   0. Global Base Styles & Design Tokens (Color Palette Mapping)
+   ========================================================================== */
+:root {
+    --bg-base: #0F0A08;
+    --bg-secondary: #1A1410;
+    --coffee-brown: #6F4E37;
+    --caramel: #C68642;
+    --gold: #D4AF37;
+    --cream: #F8F5F2;
+    --cream-muted: rgba(248, 245, 242, 0.7);
+    --white: #FFFFFF;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-serif: 'Cormorant Garamond', serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: var(--bg-base);
+    color: var(--cream);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+}
+
+.font-serif {
+    font-family: var(--font-serif);
+}
+
+.text-gold { color: var(--gold) !important; }
+.text-caramel { color: var(--caramel) !important; }
+.text-cream-muted { color: var(--cream-muted) !important; }
+.bg-base { background-color: var(--bg-base); }
+.bg-secondary-theme { background-color: var(--bg-secondary); }
+
+.tracking-widest { letter-spacing: 0.15em; }
+.max-w-lg { max-width: 550px; }
+.max-w-sm { max-width: 320px; }
+
+.gold-divider {
+    width: 60px;
+    height: 3px;
+    background-color: var(--gold);
+    margin-top: 15px;
+    border-radius: 2px;
+}
+
+/* Preloader setup */
+#preloader {
+    position: fixed;
+    top:0; left:0; width:100%; height:100%;
+    background-color: var(--bg-base);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(212, 175, 55, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--gold);
+    animation: spin 1s ease-in-out infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ==========================================================================
+   1. Component Styling (Buttons, Inputs, Glassmorphism Cards)
+   ========================================================================== */
+.btn-gold {
+    background-color: var(--gold);
+    color: var(--bg-base) !important;
+    font-weight: 600;
+    border: 2px solid var(--gold);
+    transition: all 0.4s ease;
+}
+.btn-gold:hover {
+    background-color: transparent;
+    color: var(--gold) !important;
+    transform: translateY(-2px);
+}
+
+.btn-outline-cream {
+    border: 2px solid var(--cream-muted);
+    color: var(--cream);
+    font-weight: 500;
+    transition: all 0.4s ease;
+}
+.btn-outline-cream:hover {
+    background-color: var(--cream);
+    color: var(--bg-base);
+    transform: translateY(-2px);
+}
+
+.btn-outline-gold {
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    transition: all 0.3s ease;
+}
+.btn-outline-gold:hover {
+    background-color: var(--gold);
+    color: var(--bg-base);
+}
+
+.glass-card {
+    background: rgba(26, 20, 16, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.04) !important;
+    border-radius: 16px;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+}
+.glass-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    border-color: rgba(212, 175, 55, 0.2) !important;
+}
+
+.premium-input {
+    background-color: rgba(15, 10, 8, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--cream);
+    padding: 12px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.premium-input:focus {
+    background-color: var(--bg-secondary);
+    border-color: var(--gold);
+    box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.15);
+    color: var(--cream);
+}
+
+.premium-rating-pill{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 20;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    background: linear-gradient(135deg,#FFD54F,#D4AF37);
+    color: #111 !important;
+
+    padding: 6px 12px;
+    border-radius: 30px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    box-shadow: 0 8px 20px rgba(212,175,55,.35);
+}
+
+.text-gold-hover { transition: color 0.3s ease; }
+.text-gold-hover:hover { color: var(--gold) !important; }
+
+/* ==========================================================================
+   2. Layout Section Implementations
+   ========================================================================== */
+
+/* Navbar Blurred Alpha Logic */
+.main-navbar {
+    padding: 20px 0;
+    transition: all 0.4s ease;
+    background-color: transparent;
+}
+.main-navbar.scrolled {
+    padding: 12px 0;
+    background-color: rgba(15, 10, 8, 0.85) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.main-navbar .nav-link {
+    color: var(--cream-muted);
+    font-weight: 500;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+.main-navbar .nav-link:hover, 
+.main-navbar .nav-link.active {
+    color: var(--gold) !important;
+}
+
+/* Hero Section Base & Cinematic Polish */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=1920') center/cover no-repeat;
+    min-height: 100vh;
+}
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to right, var(--bg-base) 30%, rgba(15, 10, 8, 0.4) 70%, var(--bg-base) 100%);
+    z-index: 1;
+}
+
+/* Floating Animation elements */
+.floating-cup {
+    animation: float CupAnim 5s ease-in-out infinite;
+    z-index: 2;
+    position: relative;
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+.modern-hero-img {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    border: 3px solid rgba(212, 175, 55, 0.3);
+    max-height: 480px;
+    object-fit: cover;
+}
+
+/* Animated CSS Steam Layer */
+.steam-container {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 3;
+    opacity: 0.6;
+}
+.steam-line {
+    width: 4px;
+    height: 40px;
+    background: linear-gradient(to top, transparent, rgba(255,255,255,0.4), transparent);
+    border-radius: 50%;
+    animation: riseSteam 3s ease-in-out infinite;
+}
+.line-1 { animation-delay: 0.2s; }
+.line-2 { animation-delay: 0.8s; height: 55px; }
+.line-3 { animation-delay: 0.5s; }
+@keyframes riseSteam {
+    0% { transform: translateY(20px) scaleX(1); opacity: 0; }
+    50% { transform: translateY(-20px) scaleX(1.5); opacity: 0.5; }
+    100% { transform: translateY(-50px) scaleX(0.8); opacity: 0; }
+}
+
+/* Menu Filter Transitions */
+.btn-filter {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--cream-muted);
+    padding: 8px 24px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+.btn-filter:hover, .btn-filter.active {
+    background: var(--gold);
+    color: var(--bg-base);
+    border-color: var(--gold);
+}
+.menu-item-card {
+    transition: all 0.4s ease;
+}
+
+/* Image Zoom Wrapper Component */
+.img-zoom-wrap{
+    position: relative;
+    overflow: hidden;
+}
+.img-zoom-wrap img {
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.img-zoom-wrap:hover img {
+    transform: scale(1.08);
+}
+
+/* Journey Connecting Lines */
+@media (min-width: 768px) {
+    .journey-step:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 40px;
+        left: calc(50% + 40px);
+        width: calc(100% - 80px);
+        height: 1px;
+        border-top: 2px dashed rgba(212, 175, 55, 0.3);
+        z-index: 1;
+    }
+}
+
+/* Footer link formatting adjustments */
+.footer-links li {
+    margin-bottom: 10px;
+}
+.footer-links a {
+    color: var(--cream-muted);
+    text-decoration: none;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+}
+.footer-links a:hover {
+    color: var(--gold);
+    padding-left: 5px;
+}
+
+/* ==========================================================================
+   3. Scroll Reveal Engine Architecture CSS
+   ========================================================================== */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.scroll-reveal.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}

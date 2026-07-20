@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Café Admin - Luxury Coffee Dashboard</title>
+    <meta name="description" content="Premium luxury coffee café administration panel for Aura Café.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="spinner-container">
+            <div class="coffee-loader"></div>
+            <h4 class="mt-4 playfair text-gold">Aura Café</h4>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080;">
+        <div id="actionToast" class="toast align-items-center text-white bg-dark-card border-gold" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage">
+                    Action executed successfully.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <header class="navbar navbar-expand-lg sticky-top custom-navbar">
+        <div class="container-fluid px-3">
+            <button class="btn btn-link text-gold me-2 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
+                <i class="bi bi-list fs-2"></i>
+            </button>
+            
+            <a class="navbar-brand playfair text-gold fw-bold d-flex align-items-center gap-2" href="#">
+                <i class="bi bi-cup-hot-fill"></i> Aura Café
+            </a>
+
+            <span class="navbar-text d-none d-md-inline-block ms-3 playfair text-white fs-5 fw-semibold">
+                Dashboard Overview
+            </span>
+
+            <div class="ms-auto d-flex align-items-center gap-3">
+                <div class="search-box d-none d-sm-block position-relative">
+                    <input type="text" id="dashboardSearch" class="form-control text-white search-input" placeholder="Search orders, reservations...">
+                    <i class="bi bi-search position-absolute end-0 top-50 translate-middle-y me-3 text-muted"></i>
+                </div>
+
+                <div class="d-none d-xl-flex flex-column text-end justify-content-center me-2">
+                    <span id="liveClock" class="fw-medium text-white lh-sm">12:00:00 PM</span>
+                    <span class="small text-muted-custom lh-sm"><i class="bi bi-cloud-sun text-gold"></i> 24°C Paris</span>
+                </div>
+
+                <button class="btn btn-nav-icon text-muted-custom" id="fullscreenToggle" title="Toggle Fullscreen">
+                    <i class="bi bi-arrows-fullscreen"></i>
+                </button>
+
+                <button class="btn btn-nav-icon text-muted-custom" id="themeToggle" title="Toggle Mode">
+                    <i class="bi bi-moon-stars-fill"></i>
+                </button>
+
+                <div class="dropdown">
+                    <button class="btn btn-nav-icon text-muted-custom position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-gold-badge">3</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end bg-dark-card border-gold mt-2 p-2 dropdown-animate">
+                        <li><h6 class="dropdown-header text-gold playfair">Notifications</h6></li>
+                        <li><hr class="dropdown-divider border-secondary-custom"></li>
+                        <li><a class="dropdown-item text-white py-2" href="#"><i class="bi bi-dot text-gold"></i> New Reservation #1024</a></li>
+                        <li><a class="dropdown-item text-white py-2" href="#"><i class="bi bi-dot text-gold"></i> High Revenue Alert</a></li>
+                        <li><a class="dropdown-item text-white py-2" href="#"><i class="bi bi-dot text-muted"></i> System Update Complete</a></li>
+                    </ul>
+                </div>
+
+                <div class="dropdown">
+                    <div class="d-flex align-items-center gap-2 cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Admin Image" class="rounded-circle border-gold-profile profile-img">
+                        <div class="d-none d-lg-block text-start lh-1">
+                            <span class="d-block text-white small fw-semibold">Elena Rostova</span>
+                            <span class="text-gold micro-text">Director</span>
+                        </div>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end bg-dark-card border-gold mt-2 dropdown-animate">
+                        <li><a class="dropdown-item text-white" href="#"><i class="bi bi-person me-2 text-gold"></i> My Profile</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="bi bi-gear me-2 text-gold"></i> Account Settings</a></li>
+                        <li><hr class="dropdown-divider border-secondary-custom"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i> Log out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            
+            <aside class="col-lg-2 d-none d-lg-block bg-sidebar sidebar-desktop py-4">
+                <nav class="nav flex-column gap-1">
+                    <a class="nav-link active" href="#"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                    <a class="nav-link" href="#" onclick="showToast('Navigating to Reservations')"><i class="bi bi-calendar-check"></i> Reservations</a>
+                    <a class="nav-link" href="#" onclick="showToast('Navigating to Users')"><i class="bi bi-people"></i> Users</a>
+                    <a class="nav-link" href="#" onclick="showToast('Navigating to Menu Management')"><i class="bi bi-egg-fried"></i> Menu</a>
+                    <a class="nav-link" href="#" onclick="showToast('Navigating to Categories')"><i class="bi bi-tags"></i> Categories</a>
+                    <a class="nav-link" href="#" onclick="showToast('Navigating to Orders')"><i class="bi bi-cart3"></i> Orders</a>
+                    <a class="nav-link" href="#" onclick="showToast('Navigating to Payments')"><i class="bi bi-credit-card"></i> Payments</a>
+                    <a class="nav-link" href="#" onclick="showToast('Navigating to Reviews')"><i class="bi bi-star"></i> Reviews</a>
+                    <a class="nav-link" href="#" onclick="showToast('Navigating to Gallery')"><i class="bi bi-images"></i> Gallery</a>
+                    <a class="nav-link" href="#" onclick="showToast('Navigating to Messages')"><i class="bi bi-chat-left-text"></i> Messages</a>
+                    <a class="nav-link" href="#" onclick="showToast('Navigating to Reports')"><i class="bi bi-bar-chart-line"></i> Reports</a>
+                    <a class="nav-link" href="#" onclick="showToast('Navigating to Staff Matrix')"><i class="bi bi-person-badge"></i> Staff</a>
+                    <a class="nav-link" href="#" onclick="showToast('Navigating to Settings')"><i class="bi bi-sliders"></i> Settings</a>
+                    <hr class="border-secondary-custom my-3">
+                    <a class="nav-link text-danger" href="#"><i class="bi bi-box-arrow-left"></i> Logout</a>
+                </nav>
+            </aside>
+
+            <div class="offcanvas offcanvas-start bg-sidebar text-white" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+                <div class="offcanvas-header border-bottom border-secondary-custom">
+                    <h5 class="offcanvas-title playfair text-gold" id="sidebarOffcanvasLabel"><i class="bi bi-cup-hot-fill"></i> Aura Café</h5>
+                    <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body py-4">
+                    <nav class="nav flex-column gap-1">
+                        <a class="nav-link active" data-bs-dismiss="offcanvas" href="#"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                        <a class="nav-link" data-bs-dismiss="offcanvas" href="#"><i class="bi bi-calendar-check"></i> Reservations</a>
+                        <a class="nav-link" data-bs-dismiss="offcanvas" href="#"><i class="bi bi-people"></i> Users</a>
+                        <a class="nav-link" data-bs-dismiss="offcanvas" href="#"><i class="bi bi-egg-fried"></i> Menu</a>
+                        <a class="nav-link" data-bs-dismiss="offcanvas" href="#"><i class="bi bi-cart3"></i> Orders</a>
+                        <a class="nav-link" data-bs-dismiss="offcanvas" href="#"><i class="bi bi-credit-card"></i> Payments</a>
+                        <a class="nav-link" data-bs-dismiss="offcanvas" href="#"><i class="bi bi-star"></i> Reviews</a>
+                        <a class="nav-link" data-bs-dismiss="offcanvas" href="#"><i class="bi bi-sliders"></i> Settings</a>
+                    </nav>
+                </div>
+            </div>
+
+            <main class="col-lg-7 col-md-12 content-workspace fade-in-up py-4 px-3 px-md-4">
+                
+                <section class="row g-3 mb-4">
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="dashboard-card p-3 d-flex flex-column justify-content-between h-100">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="text-muted-custom uppercase-title font-poppins">Total Users</span>
+                                <div class="card-icon-wrapper text-gold"><i class="bi bi-people-fill"></i></div>
+                            </div>
+                            <div>
+                                <h3 class="fw-bold mb-1 text-white text-counter" data-target="3412">0</h3>
+                                <span class="trend-indicator upward"><i class="bi bi-arrow-up-right"></i> +14.2%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="dashboard-card p-3 d-flex flex-column justify-content-between h-100">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="text-muted-custom uppercase-title font-poppins">Today's Orders</span>
+                                <div class="card-icon-wrapper text-gold"><i class="bi bi-bag-heart-fill"></i></div>
+                            </div>
+                            <div>
+                                <h3 class="fw-bold mb-1 text-white text-counter" data-target="184">0</h3>
+                                <span class="trend-indicator upward"><i class="bi bi-arrow-up-right"></i> +8.1%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="dashboard-card p-3 d-flex flex-column justify-content-between h-100">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="text-muted-custom uppercase-title font-poppins">Reservations</span>
+                                <div class="card-icon-wrapper text-gold"><i class="bi bi-bookmark-star-fill"></i></div>
+                            </div>
+                            <div>
+                                <h3 class="fw-bold mb-1 text-white text-counter" data-target="42">0</h3>
+                                <span class="trend-indicator downward"><i class="bi bi-arrow-down-left"></i> -2.4%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="dashboard-card p-3 d-flex flex-column justify-content-between h-100">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="text-muted-custom uppercase-title font-poppins">Revenue</span>
+                                <div class="card-icon-wrapper text-gold"><i class="bi bi-currency-euro"></i></div>
+                            </div>
+                            <div>
+                                <h3 class="fw-bold mb-1 text-white">$<span class="text-counter" data-target="14850">0</span></h3>
+                                <span class="trend-indicator upward"><i class="bi bi-arrow-up-right"></i> +21.5%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="dashboard-card p-3 d-flex flex-column justify-content-between h-100">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="text-muted-custom uppercase-title font-poppins">Active Products</span>
+                                <div class="card-icon-wrapper text-gold"><i class="bi bi-cup-straw"></i></div>
+                            </div>
+                            <div>
+                                <h3 class="fw-bold mb-1 text-white text-counter" data-target="64">0</h3>
+                                <span class="text-muted-custom small">Live Menu Items</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="dashboard-card p-3 d-flex flex-column justify-content-between h-100">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="text-muted-custom uppercase-title font-poppins">Reviews</span>
+                                <div class="card-icon-wrapper text-gold"><i class="bi bi-star-fill"></i></div>
+                            </div>
+                            <div>
+                                <h3 class="fw-bold mb-1 text-white">4.9<span class="fs-6 text-muted-custom">/5</span></h3>
+                                <span class="trend-indicator upward"><i class="bi bi-check-circle"></i> 98% Positive</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="row g-3 mb-4">
+                    <div class="col-xl-8">
+                        <div class="dashboard-card p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="playfair text-white mb-0">Revenue & Order Analytics</h5>
+                                <span class="badge bg-gold-badge">Live Updates</span>
+                            </div>
+                            <div class="chart-container container-relative">
+                                <canvas id="revenueOrdersChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="dashboard-card p-3">
+                            <h5 class="playfair text-white mb-3">Popular Coffee Mix</h5>
+                            <div class="chart-container container-relative">
+                                <canvas id="coffeeSalesChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-4">
+                    <h5 class="playfair text-gold mb-3">Quick Executive Actions</h5>
+                    <div class="row g-2">
+                        <div class="col-6 col-sm-4 col-md-2">
+                            <button class="btn btn-gradient-action w-100 p-3 d-flex flex-column align-items-center justify-content-center gap-2" onclick="showToast('Form Opened: Add Coffee')">
+                                <i class="bi bi-plus-circle fs-4"></i>
+                                <span class="small font-poppins">Add Coffee</span>
+                            </button>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-2">
+                            <button class="btn btn-gradient-action w-100 p-3 d-flex flex-column align-items-center justify-content-center gap-2" onclick="showToast('Form Opened: New Reservation')">
+                                <i class="bi bi-calendar-plus fs-4"></i>
+                                <span class="small font-poppins">Reservation</span>
+                            </button>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-2">
+                            <button class="btn btn-gradient-action w-100 p-3 d-flex flex-column align-items-center justify-content-center gap-2" onclick="showToast('Form Opened: Create Coupon')">
+                                <i class="bi bi-ticket-perforated fs-4"></i>
+                                <span class="small font-poppins">Coupon</span>
+                            </button>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-2">
+                            <button class="btn btn-gradient-action w-100 p-3 d-flex flex-column align-items-center justify-content-center gap-2" onclick="showToast('Form Opened: Add Staff')">
+                                <i class="bi bi-person-plus fs-4"></i>
+                                <span class="small font-poppins">Add Staff</span>
+                            </button>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-2">
+                            <button class="btn btn-gradient-action w-100 p-3 d-flex flex-column align-items-center justify-content-center gap-2" onclick="showToast('Uploader Active: Gallery Store')">
+                                <i class="bi bi-upload fs-4"></i>
+                                <span class="small font-poppins">Gallery</span>
+                            </button>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-2">
+                            <button class="btn btn-gradient-action w-100 p-3 d-flex flex-column align-items-center justify-content-center gap-2" onclick="showToast('Editor Opened: New Blog Post')">
+                                <i class="bi bi-journal-plus fs-4"></i>
+                                <span class="small font-poppins">Add Blog</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="dashboard-card p-3 mb-4">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2 mb-3">
+                        <h5 class="playfair text-white mb-0">Recent Luxury Reservations</h5>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-gold btn-sm" onclick="exportData('Reservations', 'Excel')"><i class="bi bi-file-earmark-excel"></i> Excel</button>
+                            <button class="btn btn-outline-gold btn-sm" onclick="exportData('Reservations', 'PDF')"><i class="bi bi-file-earmark-pdf"></i> PDF</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive custom-table-container">
+                        <table class="table table-dark-custom align-middle mb-0" id="reservationsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Customer</th>
+                                    <th>Phone</th>
+                                    <th>Guests</th>
+                                    <th>Date/Time</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#RES-9421</td>
+                                    <td><span class="fw-semibold text-white">Marcello Anthony</span></td>
+                                    <td>+33 6 555 0192</td>
+                                    <td>2 Persons</td>
+                                    <td>July 12, 2026 - 19:30</td>
+                                    <td><span class="badge bg-status-approved text-success">Approved</span></td>
+                                    <td class="text-end">
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-table-action" title="View"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-table-action text-gold" title="Edit"><i class="bi bi-pencil"></i></button>
+                                            <button class="btn btn-table-action text-danger" title="Cancel"><i class="bi bi-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#RES-9422</td>
+                                    <td><span class="fw-semibold text-white">Sophia Laurent</span></td>
+                                    <td>+33 7 222 9011</td>
+                                    <td>4 Persons</td>
+                                    <td>July 12, 2026 - 20:00</td>
+                                    <td><span class="badge bg-status-pending text-warning">Pending</span></td>
+                                    <td class="text-end">
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-table-action" title="View"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-table-action text-gold" title="Edit"><i class="bi bi-pencil"></i></button>
+                                            <button class="btn btn-table-action text-danger" title="Cancel"><i class="bi bi-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#RES-9423</td>
+                                    <td><span class="fw-semibold text-white">Julian Vane</span></td>
+                                    <td>+1 212 901 0143</td>
+                                    <td>2 Persons</td>
+                                    <td>July 11, 2026 - 15:00</td>
+                                    <td><span class="badge bg-status-completed text-info">Completed</span></td>
+                                    <td class="text-end">
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-table-action" title="View"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-table-action text-gold" title="Edit"><i class="bi bi-pencil"></i></button>
+                                            <button class="btn btn-table-action text-danger" title="Cancel"><i class="bi bi-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="dashboard-card p-3 mb-4">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2 mb-3">
+                        <h5 class="playfair text-white mb-0">Live Orders Matrix</h5>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-gold btn-sm" onclick="exportData('Orders', 'Excel')"><i class="bi bi-file-earmark-excel"></i> Excel</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive custom-table-container">
+                        <table class="table table-dark-custom align-middle mb-0" id="ordersTable">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Items Bar</th>
+                                    <th>Amount</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#AUR-4911</td>
+                                    <td class="text-white">Amélie Poulain</td>
+                                    <td class="small text-muted-custom">2x Truffle Cold Brew, 1x Caviar Croissant</td>
+                                    <td class="text-gold fw-semibold">$64.50</td>
+                                    <td><span class="small text-white"><i class="bi bi-credit-card-2-front text-gold"></i> ApplePay</span></td>
+                                    <td><span class="badge bg-status-completed text-info">Dispatched</span></td>
+                                    <td class="text-end"><button class="btn btn-sm btn-outline-gold" onclick="showToast('Processing order #AUR-4911')">Manage</button></td>
+                                </tr>
+                                <tr>
+                                    <td>#AUR-4912</td>
+                                    <td class="text-white">Viktor Vance</td>
+                                    <td class="small text-muted-custom">1x Kopi Luwak Siphon Draft</td>
+                                    <td class="text-gold fw-semibold">$120.00</td>
+                                    <td><span class="small text-white"><i class="bi bi-wallet2 text-gold"></i> Stripe Crypto</span></td>
+                                    <td><span class="badge bg-status-pending text-warning">Brewing</span></td>
+                                    <td class="text-end"><button class="btn btn-sm btn-outline-gold" onclick="showToast('Processing order #AUR-4912')">Manage</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="mb-4">
+                    <h5 class="playfair text-gold mb-3">Latest Guest Impressions</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="dashboard-card p-3 review-card h-100">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="User Image" class="review-avatar">
+                                    <div>
+                                        <h6 class="text-white mb-0 small">David Miller</h6>
+                                        <span class="micro-text text-muted-custom">2 hours ago</span>
+                                    </div>
+                                    <div class="ms-auto text-gold small">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                </div>
+                                <p class="small text-muted-custom mb-0 italic">"The Golden Flake Espresso Stout is spectacular. The ambience matches the premium standard setup here perfectly."</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="dashboard-card p-3 review-card h-100">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" alt="User Image" class="review-avatar">
+                                    <div>
+                                        <h6 class="text-white mb-0 small">Charlotte Rose</h6>
+                                        <span class="micro-text text-muted-custom">Yesterday</span>
+                                    </div>
+                                    <div class="ms-auto text-gold small">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                                    </div>
+                                </div>
+                                <p class="small text-muted-custom mb-0 italic">"Exceptional seating arrangements and crisp customer delivery flow. Best reservation management in town."</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <aside class="col-lg-3 col-md-12 right-workspace py-4 px-3 border-start border-secondary-custom">
+                
+                <div class="dashboard-card p-3 mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="playfair text-gold mb-0"><i class="bi bi-calendar3"></i> Executive Calendar</h6>
+                        <span class="badge bg-gold-badge py-1 text-black font-poppins text-uppercase small-badge fw-bold">Live</span>
+                    </div>
+                    <div class="calendar-widget text-center py-2">
+                        <div class="display-1 fw-bold text-white lh-1">06</div>
+                        <div class="text-gold uppercase-title tracking-wide fs-6 mt-1">July 2026</div>
+                        <div class="text-muted-custom small mt-2">Monday • 3 Private Dinings Scheduled</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card p-3 mb-4">
+                    <h6 class="playfair text-white mb-3">Today's Schedule Matrix</h6>
+                    <div class="schedule-timeline d-flex flex-column gap-3">
+                        <div class="schedule-item border-start-gold ps-3">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-semibold text-white small">VIP Wine-Infused Cupping</span>
+                                <span class="micro-text text-gold">14:00</span>
+                            </div>
+                            <span class="micro-text text-muted-custom">Main Lounge Room A</span>
+                        </div>
+                        <div class="schedule-item border-start-gold ps-3">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-semibold text-white small">Roastery Supplier Audit</span>
+                                <span class="micro-text text-muted-custom">16:30</span>
+                            </div>
+                            <span class="micro-text text-muted-custom">Operations Hub</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card p-3 mb-4">
+                    <h6 class="playfair text-white mb-2">Shift Tasks Registry</h6>
+                    <div class="input-group mb-2">
+                        <input type="text" id="todoInput" class="form-control form-control-sm bg-transparent border-gold text-white" placeholder="Add custom action...">
+                        <button class="btn btn-outline-gold btn-sm" type="button" id="addToDoBtn"><i class="bi bi-plus"></i></button>
+                    </div>
+                    <ul class="list-group list-group-flush bg-transparent" id="todoContainer">
+                        <li class="list-group-item bg-transparent text-white px-0 d-flex justify-content-between align-items-center border-secondary-custom">
+                            <div class="form-check m-0">
+                                <input class="form-check-input custom-checkbox-gold" type="checkbox" id="todo1">
+                                <label class="form-check-label small text-muted-custom text-decoration-strike-through-checked" for="todo1">Verify cold vault temperatures</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item bg-transparent text-white px-0 d-flex justify-content-between align-items-center border-secondary-custom">
+                            <div class="form-check m-0">
+                                <input class="form-check-input custom-checkbox-gold" type="checkbox" id="todo2">
+                                <label class="form-check-label small" for="todo2">Approve micro-lot logistics invoices</label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="dashboard-card p-3">
+                    <h6 class="playfair text-gold mb-3">Live System Updates</h6>
+                    <ul class="activity-timeline ps-3 mb-0">
+                        <li class="activity-item pb-3 position-relative">
+                            <span class="activity-dot bg-success"></span>
+                            <div class="small text-white fw-medium">New User Registered</div>
+                            <span class="micro-text text-muted-custom">14 mins ago • App Client</span>
+                        </li>
+                        <li class="activity-item pb-3 position-relative">
+                            <span class="activity-dot bg-gold"></span>
+                            <div class="small text-white fw-medium">Reservation #9421 Approved</div>
+                            <span class="micro-text text-muted-custom">1 hr ago • System Auto</span>
+                        </li>
+                        <li class="activity-item pb-3 position-relative">
+                            <span class="activity-dot bg-info"></span>
+                            <div class="small text-white fw-medium">Payment Received ($120.00)</div>
+                            <span class="micro-text text-muted-custom">2 hrs ago • Stripe Matrix</span>
+                        </li>
+                        <li class="activity-item position-relative">
+                            <span class="activity-dot bg-warning"></span>
+                            <div class="small text-white fw-medium">New Coffee Item Added</div>
+                            <span class="micro-text text-muted-custom">Yesterday • Roasted Batch #3</span>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <footer class="custom-footer border-top border-secondary-custom py-3 mt-auto text-center">
+        <div class="container">
+            <span class="text-muted-custom small font-poppins">&copy; 2026 <span class="text-gold playfair fw-bold">Aura Café Admin Dashboard</span>. All premium rights reserved. Built with precision.</span>
+        </div>
+    </footer>
+
+    <button type="button" class="btn btn-scroll-top rounded-circle shadow" id="btnScrollTop" title="Scroll to Top">
+        <i class="bi bi-chevron-up"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script2.js"></script>
+</body>
+</html>

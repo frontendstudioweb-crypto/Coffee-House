@@ -1,0 +1,501 @@
+/*==================================================
+    GOOGLE FONT VARIABLES
+==================================================*/
+
+:root{
+
+    --bg:#0F0A08;
+    --card:rgba(20,16,14,.88);
+
+    --gold:#D4AF37;
+    --gold-light:#FFD76A;
+
+    --text:#F8F5F2;
+    --muted:#B5ACA5;
+
+    --border:rgba(255,255,255,.08);
+
+}
+
+/*==================================================
+    RESET
+==================================================*/
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Plus Jakarta Sans',sans-serif;
+    color:var(--text);
+
+    background:#0F0A08;
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    position:relative;
+
+}
+
+/*==================================================
+    BACKGROUND
+==================================================*/
+
+.bg-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+
+    radial-gradient(circle at top right,
+    rgba(212,175,55,.10),
+    transparent 35%),
+
+    radial-gradient(circle at bottom left,
+    rgba(111,78,55,.30),
+    transparent 40%),
+
+    linear-gradient(
+    135deg,
+    #0f0a08,
+    #18110d,
+    #0f0a08);
+
+    z-index:-1;
+
+}
+
+/*==================================================
+    SECTION
+==================================================*/
+
+.auth-section{
+
+    width:100%;
+    padding:70px 15px;
+
+}
+
+/*==================================================
+    LOGO
+==================================================*/
+
+.logo{
+
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:60px;
+
+    color:white;
+
+    letter-spacing:8px;
+
+}
+
+.logo-text{
+
+    color:var(--gold);
+
+    letter-spacing:5px;
+
+    text-transform:uppercase;
+
+    font-size:13px;
+
+}
+
+/*==================================================
+    CARD
+==================================================*/
+
+.auth-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    backdrop-filter:blur(20px);
+
+    transition:.4s;
+
+    box-shadow:
+
+    0 20px 50px rgba(0,0,0,.55);
+
+}
+
+.auth-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:rgba(212,175,55,.30);
+
+    box-shadow:
+
+    0 25px 60px rgba(0,0,0,.70),
+
+    0 0 30px rgba(212,175,55,.10);
+
+}
+
+/*==================================================
+    IMAGE
+==================================================*/
+
+.card-image{
+
+    position:relative;
+
+    height:230px;
+
+    overflow:hidden;
+
+}
+
+.card-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.7s;
+
+}
+
+.auth-card:hover img{
+
+    transform:scale(1.08);
+
+}
+
+.image-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+
+    rgba(0,0,0,.15),
+
+    rgba(15,10,8,.88)
+
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.image-overlay h2{
+
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:42px;
+
+    color:white;
+
+}
+
+/*==================================================
+    FORM
+==================================================*/
+
+.form-label{
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    letter-spacing:1px;
+
+}
+
+.input-group{
+
+    border:1px solid var(--border);
+
+    border-radius:50px;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.03);
+
+    transition:.35s;
+
+}
+
+.input-group:focus-within{
+
+    border-color:var(--gold);
+
+    box-shadow:
+
+    0 0 15px rgba(212,175,55,.18);
+
+}
+
+.input-group-text{
+
+    background:none;
+
+    border:none;
+
+    color:var(--gold);
+
+    padding-left:18px;
+
+}
+
+.form-control{
+
+    border:none!important;
+
+    background:none!important;
+
+    color:white!important;
+
+    box-shadow:none!important;
+
+}
+
+.form-control::placeholder{
+
+    color:#888;
+
+}
+
+.toggle-password{
+
+    background:none!important;
+
+    border:none!important;
+
+    color:#999;
+
+    padding-right:20px;
+
+}
+
+.toggle-password:hover{
+
+    color:var(--gold);
+
+}
+
+/*==================================================
+    BUTTON
+==================================================*/
+
+.btn-premium{
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    var(--gold-light),
+
+    var(--gold)
+
+    );
+
+    color:#111;
+
+    border:none;
+
+    border-radius:50px;
+
+    padding:13px;
+
+    font-weight:600;
+
+    transition:.35s;
+
+}
+
+.btn-premium:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+
+    0 12px 30px rgba(212,175,55,.35);
+
+}
+
+/*==================================================
+    LINKS
+==================================================*/
+
+.auth-link{
+
+    color:var(--gold);
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.auth-link:hover{
+
+    color:white;
+
+}
+
+/*==================================================
+    CHECKBOX
+==================================================*/
+
+.form-check-input{
+
+    background:#222;
+
+    border:1px solid #555;
+
+}
+
+.form-check-input:checked{
+
+    background:var(--gold);
+
+    border-color:var(--gold);
+
+}
+
+.form-check-label{
+
+    color:var(--muted);
+
+}
+
+/*==================================================
+    FORM ANIMATION
+==================================================*/
+
+#registerForm,
+#loginForm{
+
+    animation:fade .5s ease;
+
+}
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/*==================================================
+    ALERT
+==================================================*/
+
+.alert{
+
+    border-radius:15px;
+
+}
+
+/*==================================================
+    RESPONSIVE
+==================================================*/
+
+@media(max-width:992px){
+
+.logo{
+
+    font-size:48px;
+
+}
+
+.image-overlay h2{
+
+    font-size:36px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.auth-section{
+
+    padding:40px 15px;
+
+}
+
+.logo{
+
+    font-size:38px;
+
+    letter-spacing:4px;
+
+}
+
+.logo-text{
+
+    font-size:11px;
+
+    letter-spacing:3px;
+
+}
+
+.card-image{
+
+    height:180px;
+
+}
+
+.image-overlay h2{
+
+    font-size:30px;
+
+}
+
+}
